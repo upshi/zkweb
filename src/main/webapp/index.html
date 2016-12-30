@@ -1,0 +1,41 @@
+<html lang="en" >
+<body>
+<head>
+    <meta charset="UTF-8">
+</head>
+<h2>Hello World!</h2>
+
+<div>
+    <form action="api/zkConn/createConn">
+        <input type="text" name="name" />
+        <input type="text" name="ip" />
+        <input type="text" name="port" />
+        <input type="submit" value="提交" />
+    </form>
+</div>
+
+
+<hr>
+
+<div>
+    <ul id="zkConns"></ul>
+</div>
+
+
+<script src="asserts/lib/jquery/jquery.js"></script>
+<script>
+    $(function(){
+        $.ajax({
+           url : 'api/zkConn/list',
+           method : 'POST',
+           success : function (data) {
+               data.data.zkConns.forEach(function (d) {
+                   $('#zkConns').append('<li><a href="api/zkConn/connect?uuid=' + d.uuid + '">' + d.name + ':' + d.ip + ':' + d.port + '</a></li>');
+               })
+           }
+        });
+    })
+
+</script>
+</body>
+</html>

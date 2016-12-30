@@ -1,14 +1,11 @@
 package curator;
 
-import java.util.List;
-
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.curator.retry.RetryNTimes;
 import org.apache.curator.retry.RetryUntilElapsed;
-import org.apache.zookeeper.CreateMode;
+
+import java.util.List;
 
 public class GetChildren {
 
@@ -22,7 +19,7 @@ public class GetChildren {
 		
 		CuratorFramework client = CuratorFrameworkFactory
 				.builder()
-				.connectString("192.168.1.105:2181")
+				.connectString("192.168.10.1:2181")
 				.sessionTimeoutMs(5000)
 				.connectionTimeoutMs(5000)
 				.retryPolicy(retryPolicy)
@@ -30,10 +27,13 @@ public class GetChildren {
 		
 		client.start();
 		
-		List<String> cList = client.getChildren().forPath("/jike20");
-		
-		System.out.println(cList.toString());
-		
+		List<String> cList = client.getChildren().forPath("/");
+		System.out.println("--------------------------------");
+		for(String s : cList) {
+			System.out.println(s);
+		}
+		System.out.println("--------------------------------");
+
 		
 		
 	}

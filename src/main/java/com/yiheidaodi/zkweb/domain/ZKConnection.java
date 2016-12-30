@@ -48,6 +48,10 @@ public class ZKConnection {
         this.port = port;
     }
 
+    public String connectionString() {
+        return ip + ":" + port;
+    }
+
     @Override
     public String toString() {
         return "ZKConnection{" +

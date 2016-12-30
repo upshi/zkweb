@@ -2,6 +2,7 @@ package com.yiheidaodi.zkweb.util;
 
 import com.yiheidaodi.zkweb.domain.ZKConnection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,6 +15,7 @@ import java.util.List;
  * 时间：2016-12-24 14:40.
  */
 
+@Component
 public class SQLiteUtil {
 
     @Autowired
@@ -40,8 +42,6 @@ public class SQLiteUtil {
             stat = conn.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            close(conn);
         }
         return stat;
     }
@@ -52,8 +52,6 @@ public class SQLiteUtil {
             pstat = conn.prepareStatement(sql);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            close(conn);
         }
         return pstat;
     }
@@ -84,7 +82,7 @@ public class SQLiteUtil {
         ZKConnection zkConn = null;
         try {
             pstat.setString(1, uuid);
-            rs = pstat.getResultSet();
+            rs = pstat.executeQuery();
             if(rs.next()) {
                 zkConn = new ZKConnection();
                 zkConn.setUuid(rs.getString(1));
